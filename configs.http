@@ -1,0 +1,3 @@
+### list
+
+GET  http://localhost:9229/list?app=app1&env=dev&ns=public

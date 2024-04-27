@@ -1,0 +1,12 @@
+mysql:
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        password: ''
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://localhost:3306/csconfig?useSSL=false
+        username: root
+server:
+    port: 9229
+spring:
+    application:
+        name: csconfig-
