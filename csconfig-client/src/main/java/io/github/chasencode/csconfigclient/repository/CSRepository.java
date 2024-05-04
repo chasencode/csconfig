@@ -4,7 +4,9 @@ import io.github.chasencode.csconfigclient.spring.CSConfigMeta;
 import io.github.chasencode.csconfigclient.spring.CSConfigService;
 import io.github.chasencode.csconfigclient.spring.CSConfigServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,10 +17,16 @@ import java.util.Map;
  **/
 public interface CSRepository {
 
+    Map<String, String> LAST_CONFIG = new HashMap<>();
+    Map<String, Long> LAST_TIMESTAMP = new HashMap<>();
 
-    static CSRepository getDefault(CSConfigMeta meta) {
-        return new CSRepositoryImpl(meta);
+
+    static CSRepository getDefault(ApplicationContext applicationContext, CSConfigMeta meta) {
+        return new CSRepositoryImpl(applicationContext, meta);
     }
 
+    void addListener(CSRepositoryChangeListener listener);
+
     Map<String, String> getConfig();
+
 }

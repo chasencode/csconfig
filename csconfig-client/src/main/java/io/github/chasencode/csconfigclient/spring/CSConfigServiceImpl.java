@@ -1,5 +1,9 @@
 package io.github.chasencode.csconfigclient.spring;
 
+import io.github.chasencode.csconfigclient.repository.CSRepositoryChangeListener;
+import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
+import org.springframework.context.ApplicationContext;
+
 import java.util.Map;
 
 /**
@@ -12,7 +16,10 @@ public class CSConfigServiceImpl implements CSConfigService {
 
     Map<String, String> config;
 
-    public CSConfigServiceImpl(Map<String, String> config) {
+    ApplicationContext applicationContext;
+
+    public CSConfigServiceImpl(ApplicationContext applicationContext, Map<String, String> config) {
+        this.applicationContext = applicationContext;
         this.config = config;
     }
 
@@ -24,5 +31,13 @@ public class CSConfigServiceImpl implements CSConfigService {
     @Override
     public String getProperty(String name) {
         return this.config.get(name);
+    }
+
+    @Override
+    public void onChange(CSRepositoryChangeEvent event) {
+        this.config = event.config();
+        if (!config.isEmpty()) {
+            applicationContext.publishEvent(new EnvironmentChangeEvent(config.keySet()));
+        }
     }
 }

@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
@@ -22,13 +24,14 @@ import java.util.Map;
  * PriorityOrdered 相当于 在类上加Order配置 ， 因不想被bean容器管理，是作为类库引入的不是作为bean扫描到使用的，尽量不用注解使用
  **/
 @Data
-public class CSPropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, PriorityOrdered {
+public class CSPropertySourcesProcessor implements BeanFactoryPostProcessor, ApplicationContextAware, EnvironmentAware, PriorityOrdered {
 
 
     private final static String CS_PROPERTY_SOURCES = "CSPropertySources";
     private final static String CS_PROPERTY_SOURCE = "CSPropertySource";
 
     Environment environment;
+    ApplicationContext applicationContext;
 
 
     @Override
@@ -38,10 +41,10 @@ public class CSPropertySourcesProcessor implements BeanFactoryPostProcessor, Env
             return;
         }
         // 通过HTTP 请求获取配置中心（csconfig-server）的配置
-        Map<String, String> config = new HashMap<>();
-        config.put("cs.a", "dev500");
-        config.put("cs.b", "dev600");
-        config.put("cs.c", "dev700");
+//        Map<String, String> config = new HashMap<>();
+//        config.put("cs.a", "dev500");
+//        config.put("cs.b", "dev600");
+//        config.put("cs.c", "dev700");
 
 
         String app = ENV.getProperty("csconfig.app", "app1");
@@ -51,7 +54,7 @@ public class CSPropertySourcesProcessor implements BeanFactoryPostProcessor, Env
         CSConfigMeta metadata = new CSConfigMeta(app, ns, env, configServer);
 
         // 实例话配置服务
-        CSConfigService configService = CSConfigService.getDefault(metadata);
+        CSConfigService configService = CSConfigService.getDefault(applicationContext, metadata);
         // 实例话数据源
         CSPropertySource propertySources = new CSPropertySource(CS_PROPERTY_SOURCE, configService);
         // 实例配置信息

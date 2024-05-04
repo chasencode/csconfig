@@ -1,3 +1,20 @@
 ### list
 
 GET  http://localhost:9229/list?app=app1&env=dev&ns=public
+
+### update
+POST http://localhost:9229/update?app=app1&env=dev&ns=public
+Content-Type: application/json
+
+{
+  "cs.a": "dev000000002",
+  "cs.c": "cc200",
+  "cs.d": "dd200"
+}
+
+
+### version
+GET http://localhost:9229/version?app=app1&env=dev&ns=public
+
+### demo 8081
+GET http://localhost:8081/demo

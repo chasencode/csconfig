@@ -22,9 +22,9 @@ public interface ConfigsMapper {
     List<Configs> list(String app, String env, String ns);
 
     @Select("SELECT * FROM configs WHERE app = #{app} AND env = #{env} AND ns = #{ns} AND pkey = #{pkey}")
-    Configs select(String app, String env, String ns, String pk);
+    Configs select(String app, String env, String ns, String pkey);
 
-    @Insert("INSERT INTO configs (app, env, ns, pkey, value) VALUES (#{app}, #{env}, #{ns}, #{pkey}, #{pval})")
+    @Insert("INSERT INTO configs (app, env, ns, pkey, pval) VALUES (#{app}, #{env}, #{ns}, #{pkey}, #{pval})")
     void insert(Configs config);
 
     @Update("Update configs set pval = #{pval} where app = #{app} and env = #{env} and ns = #{ns} and pkey = #{pkey}")

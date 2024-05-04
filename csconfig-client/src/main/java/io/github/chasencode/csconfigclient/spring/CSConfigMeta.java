@@ -15,11 +15,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CSConfigMeta {
 
-    public String env;
-
     public String app;
 
     public String ns;
+
+
+    public String env;
+
     public String configServer;
+
+    public String buildKey() {
+        return app + "_" + ns + "_" + env;
+    }
+
+    public String toListUrl() {
+        return configServer + "/list?app=" + app + "&ns=" + ns + "&env=" + env;
+    }
+
+    public String toHeartUrl() {
+        return configServer + "/version?app=" + app + "&ns=" + ns + "&env=" + env;
+    }
 
 }

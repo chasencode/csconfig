@@ -13,7 +13,6 @@ public interface HttpUtil {
 
     String post(String requestString, String url);
     String get(String url);
-
     @SneakyThrows
     static <T> T httpGet(String url, Class<T> clazz) {
 //        log.debug(" =====>>>>>> httpGet: " + url);

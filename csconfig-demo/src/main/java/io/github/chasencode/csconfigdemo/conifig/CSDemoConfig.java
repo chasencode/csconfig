@@ -14,4 +14,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class CSDemoConfig {
 
     String a;
+
+    String b;
 }
