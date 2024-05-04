@@ -81,7 +81,7 @@ public class CSRepositoryImpl implements CSRepository {
         configs.forEach(c -> {
             config.put(c.getPkey(), c.getPval());
         });
-
+        // 更新springbean中的配置
         listeners.forEach(listener -> {
             listener.onChange(new CSRepositoryChangeListener.CSRepositoryChangeEvent(meta, config));
         });
