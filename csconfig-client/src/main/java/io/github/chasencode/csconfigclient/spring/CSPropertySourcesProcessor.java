@@ -33,8 +33,8 @@ public class CSPropertySourcesProcessor implements BeanFactoryPostProcessor, Env
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        ConfigurableEnvironment env = (ConfigurableEnvironment) environment;
-        if (env.getPropertySources().contains(CS_PROPERTY_SOURCE)) {
+        ConfigurableEnvironment ENV = (ConfigurableEnvironment) environment;
+        if (ENV.getPropertySources().contains(CS_PROPERTY_SOURCE)) {
             return;
         }
         // 通过HTTP 请求获取配置中心（csconfig-server）的配置
@@ -42,15 +42,23 @@ public class CSPropertySourcesProcessor implements BeanFactoryPostProcessor, Env
         config.put("cs.a", "dev500");
         config.put("cs.b", "dev600");
         config.put("cs.c", "dev700");
+
+
+        String app = ENV.getProperty("csconfig.app", "app1");
+        String env = ENV.getProperty("csconfig.env", "dev");
+        String ns = ENV.getProperty("csconfig.ns", "public");
+        String configServer = ENV.getProperty("csconfig.configServer", "http://127.0.0.1:9229");
+        CSConfigMeta metadata = new CSConfigMeta(app, ns, env, configServer);
+
         // 实例话配置服务
-        CSConfigService csConfigService = new CSConfigServiceImpl(config);
+        CSConfigService configService = CSConfigService.getDefault(metadata);
         // 实例话数据源
-        CSPropertySource propertySources = new CSPropertySource(CS_PROPERTY_SOURCE, csConfigService);
+        CSPropertySource propertySources = new CSPropertySource(CS_PROPERTY_SOURCE, configService);
         // 实例配置信息
         CompositePropertySource compositePropertySource = new CompositePropertySource(CS_PROPERTY_SOURCES);
         compositePropertySource.addPropertySource(propertySources);
         // 将配置放到最前面， 因为越往前优先级越高
-        env.getPropertySources().addFirst(propertySources);
+        ENV.getPropertySources().addFirst(propertySources);
     }
 
     @Override
