@@ -7,9 +7,9 @@ POST http://localhost:9229/update?app=app1&env=dev&ns=public
 Content-Type: application/json
 
 {
-  "cs.a": "dev000000002",
-  "cs.c": "cc200",
-  "cs.d": "dd200"
+  "cs.a": "dev0000000014",
+  "cs.c": "cc2005",
+  "cs.b": "dd200225"
 }
 
 

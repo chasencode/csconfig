@@ -2,7 +2,7 @@ package io.github.chasencode.csconfigclient.repository;
 
 import com.alibaba.fastjson.TypeReference;
 import io.github.chasencode.csconfigclient.spring.CSConfigMeta;
-import io.github.chasencode.csconfigclient.utils.http.HttpUtil;
+import io.github.chasencode.csconfigclient.util.http.HttpUtil;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
 

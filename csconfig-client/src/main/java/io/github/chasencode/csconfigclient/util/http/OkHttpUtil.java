@@ -1,6 +1,5 @@
-package io.github.chasencode.csconfigclient.utils.http;
+package io.github.chasencode.csconfigclient.util.http;
 
-import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.util.concurrent.TimeUnit;

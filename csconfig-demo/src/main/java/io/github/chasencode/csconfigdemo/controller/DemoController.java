@@ -28,6 +28,6 @@ public class DemoController {
         return "cs.a = "+ a + "\n "
                 + "cs.b = " + b + "\n"
                 + "demo.a = " + csDemoConfig.getA() + "\n"
-                + "demo.b = " + csDemoConfig.getA() + "\n";
+                + "demo.b = " + csDemoConfig.getB() + "\n";
     }
 }

@@ -1,4 +1,4 @@
-package io.github.chasencode.csconfigclient.utils.http;
+package io.github.chasencode.csconfigclient.util.http;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;

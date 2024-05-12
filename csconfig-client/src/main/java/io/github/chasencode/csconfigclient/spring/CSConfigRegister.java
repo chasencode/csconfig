@@ -1,5 +1,7 @@
 package io.github.chasencode.csconfigclient.spring;
 
+import io.github.chasencode.csconfigclient.value.SpringValue;
+import io.github.chasencode.csconfigclient.value.SpringValueProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -22,19 +24,20 @@ public class CSConfigRegister implements ImportBeanDefinitionRegistrar {
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         System.out.println("register CSPropertySourcesProcessor");
         registerBean(registry, CSPropertySourcesProcessor.class);
+        registerBean(registry, SpringValueProcessor.class);
     }
 
 
     private static void registerBean(BeanDefinitionRegistry registry, Class<?> clazz) {
-
         Optional<String> first = Arrays.stream(registry.getBeanDefinitionNames())
                 .filter(x -> Objects.equals(registry.getBeanDefinition(x)
                         .getBeanClassName(), clazz.getName())).findFirst();
         if (first.isEmpty()) {
             System.out.println("register " + clazz.getName());
             // 创建bean的定义
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(CSPropertySourcesProcessor.class);
-            registry.registerBeanDefinition(CSPropertySourcesProcessor.class.getName(), builder.getBeanDefinition());
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
+            registry.registerBeanDefinition(clazz.getName(), builder.getBeanDefinition());
+
         }
     }
 }
