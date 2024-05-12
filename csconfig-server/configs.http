@@ -18,3 +18,21 @@ GET http://localhost:9229/version?app=app1&env=dev&ns=public
 
 ### demo 8081
 GET http://localhost:8081/demo
+
+### update
+POST http://localhost:9229/update?app=app1&env=dev&ns=public
+Content-Type: application/json
+
+//{
+//"chasenrpc.consumer.retries":2,
+//"chasenrpc.consumer.timeout":1000,
+//"chasenrpc.consumer.grayRatio":33,
+//"chasenrpc.consumer.faultLimit":10
+//}
+
+{
+  "chasenrpc.provider.metas.dc":"sz",
+  "chasenrpc.provider.metas.gray":"false",
+  "chasenrpc.provider.metas.unit":"S002",
+  "chasenrpc.provider.metas.tc":300
+}

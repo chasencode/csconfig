@@ -1,5 +1,6 @@
 package io.github.chasencode.csconfigserver.controller;
 
+import io.github.chasencode.csconfigserver.DistributedLocks;
 import io.github.chasencode.csconfigserver.mapper.ConfigsMapper;
 import io.github.chasencode.csconfigserver.model.Configs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class CSConfigController {
 
     @Autowired
     ConfigsMapper configsMapper;
+
+    @Autowired
+    DistributedLocks distributedLocks;
+
+
     Map<String, Long> VERSIONS = new HashMap<>();
 
     @GetMapping("/list")
@@ -47,6 +53,13 @@ public class CSConfigController {
             @RequestParam("ns") String ns)
     {
         return VERSIONS.getOrDefault(app + env + ns, -1L);
+    }
+
+
+    @GetMapping("/status")
+    public boolean status()
+    {
+        return distributedLocks.getLocked().get();
     }
 
     private void insertOrUpdate(Configs config) {

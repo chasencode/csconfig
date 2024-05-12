@@ -16,8 +16,8 @@ import javax.sql.DataSource;
  * @Author: Chasen
  * @Create: 2024-04-27 20:11
  **/
-@Configuration
-@MapperScan(basePackages = "io.github.chasencode.csconfigserver.mapper")
+//@Configuration
+//@MapperScan(basePackages = "io.github.chasencode.csconfigserver.mapper")
 public class MySqlConfig {
 
     @Bean(name = "dataSource")
